@@ -1,3 +1,4 @@
+
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -6,7 +7,7 @@
 
 using namespace std;
 
-int Menu::count = 0;
+int Menu::count = 1;
 
 int main(/*int argc, char* argv[]*/){
 
@@ -18,7 +19,7 @@ int main(/*int argc, char* argv[]*/){
     if(!out) {
         cout << "Файл не открылся";
         return 0;}
-
+  string link = "inputFile.txt";
   Menu menu;
 
   cout << menu.menu << endl;
@@ -27,39 +28,40 @@ int main(/*int argc, char* argv[]*/){
   int i = 1;
   int id;
   int arr_size = 1;
-  Tour *data = new Tour[arr_size];
-  *data = menu.getFile(out, data, &arr_size);
-  cout << data;
-  
+  Tour *data = new Tour[Menu::count];
+  data = menu.getFile(out, data);
 
   while(i == 1){
     cin >> id;
     if(id == 1){
-      menu.addition(out, data, &arr_size);
+      data = menu.addition(data);
+      menu.saveChanges(out, link, data);
       DIV
     }
     else if(id == 2){
-      menu.show_all_entries(out, data);
+      menu.show_all_entries(data);
       DIV
     }
     else if(id == 3){
-      menu.find_tour_by_name(out, data);
+      menu.find_tour_by_name(data);
       DIV
     }
     else if(id == 4){
-      menu.find_tour_by_place(out, data);
+      menu.find_tour_by_place(data);
       DIV
     }
     else if(id == 5){
-      menu.find_tour_by_date(out, data);
+      menu.find_tour_by_date(data);
       DIV
     }
     else if(id == 6){
-      menu.find_tour_by_price(out, data);
+      menu.find_tour_by_price(data);
       DIV
     }
     else if(id == 7){
-      menu.removal(out, data, &arr_size);
+      data = menu.removal(data);
+      menu.saveChanges(out, link, data);
+      DIV
     }
     else if(id == 8){
       break;
@@ -73,6 +75,5 @@ int main(/*int argc, char* argv[]*/){
       DIV
     }
   }
-  delete[] data;
   out.close();
 }

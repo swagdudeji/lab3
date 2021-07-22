@@ -1,0 +1,15 @@
+n = int(input())
+damages = []
+for i in range(n):
+  damages.append(int(input()))
+
+average = 0
+for i in range(n):
+  average += damages[i]
+average = average/(2*n)
+print(average)
+
+expected = 0
+for i in range(n):
+  expected += (1/n)*(average + damages[i] - min(2*average,damages[i]))
+print(expected) 
